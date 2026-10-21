@@ -72,6 +72,8 @@ flowchart LR
 
 ## Installation et lancement
 
+Le code est publié pour consultation (voir [LICENSE](LICENSE)) ; ces instructions décrivent le fonctionnement de l'outil.
+
 Prérequis : **Windows 10/11** (le lanceur et l'ouverture d'un mail utilisent des API Windows ; le serveur lui-même est du Python portable) et **Python 3.12 ou plus récent**. Aucune dépendance à installer (`pip` inutile).
 
 ```bash
