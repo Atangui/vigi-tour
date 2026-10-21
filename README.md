@@ -148,10 +148,10 @@ vigie-tour/
 ├── scripts/sync_demo.py    régénère docs/ depuis app/static/
 ├── config.example.json     modèle de configuration (fictif)
 ├── VigieTour.cmd           lanceur Windows
-├── LICENSE                 MIT
+├── LICENSE                 tous droits réservés
 └── README.md
 ```
 
 ## Crédits
 
-Conçu et développé par **Charles A.**, 2026. Projet personnel sous licence [MIT](LICENSE). Tous les noms, adresses et données de la démo sont fictifs.
+Conçu et développé par **Charles A.**, 2026. Projet personnel, tous droits réservés : le code est publié pour consultation, sans licence de réutilisation (voir [LICENSE](LICENSE)). Tous les noms, adresses et données de la démo sont fictifs.
