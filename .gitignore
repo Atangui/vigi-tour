@@ -1,0 +1,11 @@
+data/
+runtime/
+config.local.json
+*.db
+*.db-shm
+*.db-wal
+__pycache__/
+*.log
+*.pyc
+.DS_Store
+Thumbs.db

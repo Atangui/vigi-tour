@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vigie Tour — démo interactive</title>
+  <meta name="description" content="Vigie Tour transforme vos e-mails en tâches (à faire, en attente, engagements, échéances) avec une analyse locale, zéro jeton. Démo interactive : données fictives.">
+  <meta property="og:title" content="Vigie Tour — démo interactive">
+  <meta property="og:description" content="Vigie Tour transforme vos e-mails en tâches (à faire, en attente, engagements, échéances) avec une analyse locale, zéro jeton. Démo interactive : données fictives.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="vigie.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&amp;family=Geist+Mono:wght@400;500&amp;family=Doto:wght@700;900&amp;family=Space+Grotesk:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="app.css">
+  <script>
+    // Thème appliqué avant l'affichage pour éviter un flash
+    try { document.documentElement.dataset.theme = localStorage.getItem("mp.theme") || "spatial";
+          document.documentElement.dataset.mode = localStorage.getItem("mp.mode") || "dark";
+          document.documentElement.dataset.lab = localStorage.getItem("mp.lab") === "0" ? "off" : "on";
+          if (localStorage.getItem("mp.side") === "mini") document.documentElement.classList.add("side-mini"); }
+    catch (e) { document.documentElement.dataset.theme = "spatial"; document.documentElement.dataset.mode = "dark"; }
+  </script>
+</head>
+<body>
+  <div class="orbs" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <div class="app">
+    <aside class="side">
+      <div class="brand">
+        <span class="logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 21l1.7-9.8M13 21l-1.7-9.8M8.8 16.6h3.4"/><path d="M6.9 7.6l3.6-3.7 3.6 3.7z" fill="currentColor"/><rect x="7.6" y="7.2" width="5.8" height="4.4" rx="1.2" fill="currentColor"/><path d="M14.98 6.38a5.4 5.4 0 0 1 0 6.04M17.77 5.2a8.4 8.4 0 0 1 0 8.4"/></svg></span>
+        <span class="brand-txt"><b>Vigie Tour</b><small>par Charles Atangui</small></span>
+        <button id="sideToggle" class="side-toggle" aria-label="Replier la barre latérale" title="Replier / déplier la barre latérale (\)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+      </div>
+      <nav id="nav" aria-label="Vues"></nav>
+      <div class="side-foot">
+        <div class="term" id="sideTerm" aria-label="Journal du moteur"></div>
+        <div id="status" class="status"></div>
+        <button id="settingsBtn" class="btn ghost"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8M14 5v4M8 15v4"/></svg><span class="lbl">Réglages</span></button>
+      </div>
+    </aside>
+
+    <div class="work">
+      <header class="top">
+        <div class="cmd" id="cmdBox">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input id="cmd" autocomplete="off" aria-label="Rechercher ou demander à Vigie Tour"
+                 placeholder="Rechercher, ou demander : « reporte ce qui vient de Léa à jeudi »">
+          <kbd>Ctrl K</kbd>
+          <div id="cmdPanel" class="cmd-panel hidden" role="dialog" aria-label="Assistant"></div>
+        </div>
+        <button id="dashBtn" class="btn dash-btn" aria-pressed="true" title="Masquer / afficher les blocs du briefing (B)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><path d="M3 15h18M3 19h12"/></svg><span class="lbl">Briefing</span>
+        </button>
+        <button id="syncBtn" class="btn icon" aria-label="Synchroniser maintenant" title="Synchroniser (R)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v4h-4"/></svg>
+        </button>
+        <div class="seg" role="group" aria-label="Thème">
+          <button data-theme-btn="spatial">Spatial</button>
+          <button data-theme-btn="bento">Bento</button>
+        </div>
+        <button id="modeBtn" class="btn icon" aria-label="Basculer clair / sombre">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+        </button>
+      </header>
+
+      <div id="banner" class="banner hidden"></div>
+
+      <section class="dash" id="dash" aria-label="Briefing">
+        <article class="card brief" data-block="brief">
+          <div class="rain" id="rain" aria-hidden="true"></div>
+          <div class="eyebrow" id="briefDate"></div>
+          <h1 id="briefTitle"></h1>
+          <p id="briefText"></p>
+          <div class="pills" id="briefPills"></div>
+          <div class="daydots" id="dayDots" aria-hidden="true"></div>
+          <div class="muted small" id="dayTxt"></div>
+        </article>
+        <article class="card next" data-block="next">
+          <div class="eyebrow">Prochaine échéance <span class="rec"></span></div>
+          <div class="ring">
+            <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" class="ring-bg"/><circle cx="50" cy="50" r="44" class="ring-fg" id="ringFg"/></svg>
+            <div class="ring-txt"><b class="num" id="nextCd">--:--:--</b><small id="nextDay"></small></div>
+          </div>
+          <button class="next-title" id="nextTitle"></button>
+        </article>
+        <article class="card globe" data-block="globe">
+          <div class="eyebrow">Réseau <span class="muted">Lyon</span></div>
+          <canvas id="globe" aria-label="Globe : liaisons entre Lyon et les événements partenaires" role="img"></canvas>
+        </article>
+        <article class="card console" data-block="console" aria-label="Console du moteur">
+          <div class="eyebrow"><span>Moteur / console</span><span class="con-live" id="conLive"></span></div>
+          <div class="con-grid">
+            <div class="screen">
+              <div class="rain" id="conRain" aria-hidden="true"></div>
+              <div class="screen-in">
+                <div class="screen-head"><span>Journal / analyse</span><span>tty-01</span></div>
+                <div class="screen-log"><div class="scroll" id="conLog"></div></div>
+                <div>&gt; <span class="cursor">█</span></div>
+              </div>
+            </div>
+            <div class="con-panel" id="conPipe"></div>
+            <div class="con-panel" id="conSignal"></div>
+          </div>
+        </article>
+        <article class="card mini" data-block="review">
+          <div class="eyebrow">Revue de l’historique <span class="tagnew">Nouveau</span></div>
+          <b class="num big" id="wReviewN">0</b>
+          <p class="muted small" id="wReviewTxt"></p>
+          <button class="btn pri" id="wReviewBtn">Commencer la revue</button>
+        </article>
+        <article class="card mini" data-block="lot">
+          <div class="eyebrow">Lot détecté</div>
+          <b class="num big" id="wLotN">0</b>
+          <p class="muted small" id="wLotTxt"></p>
+          <button class="btn" id="wLotBtn">Traiter le lot</button>
+        </article>
+        <article class="card mini" data-block="wait">
+          <div class="eyebrow">On te doit une réponse</div>
+          <b class="num big" id="wWaitN">0</b>
+          <p class="muted small">relances à faire auprès des autres</p>
+          <button class="btn" id="wWaitBtn">Voir les attentes</button>
+        </article>
+        <article class="card mini flux" data-block="flux">
+          <div class="eyebrow">Mails reçus · 14 j <span class="num" id="fluxTotal"></span></div>
+          <div class="bars" id="fluxBars"></div>
+        </article>
+      </section>
+
+      <div class="content">
+        <section class="card list" aria-label="Tâches">
+          <div class="list-head">
+            <div>
+              <h2 id="viewTitle"></h2>
+              <p class="muted small" id="viewSub"></p>
+            </div>
+            <div class="list-tools" id="listTools"></div>
+          </div>
+          <div id="list"></div>
+          <div class="keys muted small">
+            <span><kbd>J</kbd><kbd>K</kbd> naviguer</span><span><kbd>X</kbd> fait</span><span><kbd>S</kbd> reporter</span>
+            <span><kbd>C</kbd> copier la réponse</span><span><kbd>I</kbd> ignorer</span><span><kbd>Ctrl K</kbd> demander</span>
+          </div>
+        </section>
+        <div class="splitter" id="splitter" role="separator" aria-orientation="vertical" aria-label="Largeur du panneau de détail" title="Glisser pour élargir · double-clic : largeur d’origine"></div>
+        <aside class="card detail" id="detail" aria-label="Détail de la tâche"></aside>
+      </div>
+    </div>
+  </div>
+
+  <div id="review" class="overlay hidden" role="dialog" aria-label="Revue de l’historique"></div>
+  <div id="settings" class="overlay hidden" role="dialog" aria-label="Réglages"></div>
+  <div id="menu" class="menu hidden"></div>
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="demo.js"></script>
+  <script src="globe.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
