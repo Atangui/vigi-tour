@@ -16,7 +16,7 @@ Vous pouvez cocher des tâches, les reporter, changer leur priorité, lire les f
 
 ## Le problème
 
-Une boîte mail professionnelle, c'est des centaines de messages, et très peu qui demandent vraiment quelque chose. Les demandes se perdent dans les fils, on oublie ce qu'on a promis (« je te l'envoie demain »), on ne relance pas ce qu'on attend des autres, et les alertes importantes (faille de sécurité sur un plugin, certificat qui expire) se noient dans le bruit.
+Une boîte mail professionnelle, c'est des centaines de messages, et très peu qui demandent vraiment quelque chose. Les demandes se perdent dans les fils, on oublie ce qu'on a promis (« je te l'envoie demain »), on ne relance pas ce qu'on attend des autres, et les rappels importants (une échéance, un document à valider) se noient dans le bruit.
 
 Vigie Tour est une **tour de guet** posée sur la boîte mail : elle lit, trie et transforme chaque conversation en tâche claire, avec une échéance, une priorité, un plan d'action et une réponse prête à copier.
 
@@ -25,11 +25,11 @@ Vigie Tour est une **tour de guet** posée sur la boîte mail : elle lit, trie e
 - **Cinq types de tâches** : à faire, à transférer (avec suggestion de la bonne personne grâce à l'annuaire « qui gère quoi »), engagements (ce que *vous* avez promis), en attente (relances à prévoir), à trier (pour info).
 - **Échéances détectées** dans le texte (« avant vendredi », « fin de semaine », « 14/11 »), échéance estimée sinon, priorité calculée.
 - **Zéro oubli** : une question directe restée sans réponse depuis 24 h devient automatiquement une tâche prioritaire.
-- **Tickets de support** : un ticket = un fil, quel que soit son statut (« Waiting for reply: Customer », « Resolved »…). Les rapports automatiques récurrents (alertes de sécurité, mises à jour) sont regroupés en une tâche consolidée.
+- **Tickets de support** : un ticket = un fil, quel que soit son statut (« Waiting for reply: Customer », « Resolved »…). Les rapports automatiques récurrents (statistiques, notifications d'outils) sont regroupés en une tâche consolidée.
 - **Apprentissage** : chaque « Fait », « Ignorer » ou reclassement affine le classifieur. Ce que vous avez réglé ne revient pas quand le fil est relu.
-- **Lots** : les tâches de même nature (« Sécurité WordPress », « Newsletters »…) sont regroupées pour être traitées en série.
+- **Lots** : les tâches de même nature (« Fiches intervenants », « Newsletters »…) sont regroupées pour être traitées en série.
 - **Revue de l'historique** : les anciennes demandes reçues avant la mise en service sont à trier une seule fois, en quelques secondes, au clavier.
-- **Barre de commande** (`Ctrl K`) : recherche en direct, ou demande en langage naturel (« qu'est-ce qui est en retard ? »). Les actions proposées ne sont jamais appliquées sans confirmation.
+- **Barre de commande** (`Ctrl K`) : recherche en direct, ou demande en langage naturel (« qu'est-ce qui est urgent ? »). Les actions proposées ne sont jamais appliquées sans confirmation.
 - **Réponses prêtes** : une réponse type pour chaque tâche, et un bouton « ✦ Rédiger avec Claude » à la demande.
 - **Interface** : mise en page « application » (barre latérale et briefing fixes), blocs déplaçables et redimensionnables, thèmes **Spatial** et **Bento**, clair / sombre, décor « laboratoire » (pluie Matrix, console du moteur, globe) désactivable, raccourcis clavier (`J` `K` `X` `S` `C` `I` `R` `B`).
 
