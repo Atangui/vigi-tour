@@ -1,0 +1,36 @@
+{
+  "me": {
+    "name": "Alex Martin",
+    "email": "alex.martin@example.com",
+    "role": "Webmaster chez Nova Events (sites événementiels, newsletters, WordPress)"
+  },
+  "inbox_dir": "~/VigieTour/inbox",
+  "claude_model": "haiku",
+  "port": 8777,
+  "people": [
+    {
+      "nom": "Léa Martin",
+      "email": "lea.martin@example.com",
+      "role": "Head of Digital",
+      "sujets": "arbitrages web, sites, plugins, priorités de l'équipe digitale"
+    },
+    {
+      "nom": "Hugo Bernard",
+      "email": "hugo.bernard@example.com",
+      "role": "VP Operations",
+      "sujets": "budget, facturation, hébergement, décisions"
+    },
+    {
+      "nom": "Sarah Cohen",
+      "email": "sarah.cohen@example.com",
+      "role": "Responsable communication",
+      "sujets": "contenus des événements, intervenants, bios, programme"
+    },
+    {
+      "nom": "Yanis Petit",
+      "email": "yanis.petit@example.com",
+      "role": "Graphiste senior",
+      "sujets": "visuels, logos partenaires, bannières"
+    }
+  ]
+}
