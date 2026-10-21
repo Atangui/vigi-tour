@@ -39,9 +39,7 @@
     marc:     { name: "Marc Dubois",        email: "marc.dubois@alto-sports.example.com" },
     julien:   { name: "Julien Garnier",     email: "j.garnier@mediaflux.example.com" },
     hostline: { name: "Hostline Support",   email: "support@hostline.example.com",  org: true },
-    hostmon:  { name: "Hostline Monitoring", email: "no-reply@hostline.example.com", org: true },
-    wf:       { name: "Wordfence",          email: "alerts@wordfence.example.com",  org: true },
-    wpm:      { name: "WP Monitor",         email: "alerts@wp-monitor.example.com", org: true },
+    stats:    { name: "Statistiques du site", email: "rapports@stats.example.com",  org: true },
   };
 
   /* ===================== Données : fils de mails et tâches ===================== */
@@ -83,32 +81,32 @@
 
   const SIGN_TU = "Bonne journée,\nCharles", SIGN_VOUS = "Bien cordialement,\nCharles A.";
 
-  /* ---------- En retard ---------- */
+  /* ---------- Aujourd'hui (rien en retard dans la démo) ---------- */
   thread("s:page programme", "Projets / Nova Summit", [
     ["in", "lea", 70, "Page Programme — créneaux journée 2",
       `Bonjour Charles,\n\nLe programme de la journée 2 est validé côté contenu. Peux-tu mettre à jour la page Programme du site avec les nouveaux créneaux (tableau en pièce jointe) ?\n\nIl faudrait que ce soit en ligne avant la prochaine newsletter.\n\nMerci !\nLéa`, true],
     ["out", "lea", 66, "RE: Page Programme — créneaux journée 2",
-      `Hello Léa,\n\nBien reçu, je regarde ça dès que j’ai fini le correctif du formulaire d’inscription. Je te confirme l’heure de mise en ligne.\n\nCharles`],
+      `Hello Léa,\n\nBien reçu, je m’en occupe dès que j’ai bouclé la page Intervenants. Je te confirme l’heure de mise en ligne.\n\nCharles`],
     ["in", "lea", 20, "RE: Page Programme — créneaux journée 2",
       `Merci Charles. Petit ajout : la table ronde de 16 h 30 passe en salle B. Tu peux l’intégrer aussi ? C’est urgent, la newsletter part bientôt.\n\nLéa`],
   ]);
-  task({ key: "s:page programme", kind: "a_faire", prio: "haute", dl: -1, dlt: "explicite", who: "lea", src: "ia", conf: 0.88, created: 20,
+  task({ key: "s:page programme", kind: "a_faire", prio: "haute", dl: 0, dlt: "explicite", who: "lea", src: "ia", conf: 0.88, created: 20,
     title: "Mettre à jour la page Programme (créneaux journée 2, table ronde en salle B)",
     summary: "Léa demande d’intégrer les créneaux de la journée 2, puis la table ronde de 16 h 30 déplacée en salle B, avant la prochaine newsletter.",
     ev: "Peux-tu mettre à jour la page Programme du site avec les nouveaux créneaux",
     steps: ["Relire le tableau des créneaux en pièce jointe", "Mettre à jour la page Programme et la table ronde de 16 h 30 (salle B)", "Vérifier l’affichage sur mobile", "Prévenir Léa que c’est en ligne"],
     draft: `Bonjour Léa,\n\nC’est noté : j’intègre les créneaux de la journée 2 et la table ronde de 16 h 30 en salle B. Je te préviens dès que c’est en ligne.\n\n${SIGN_TU}` });
 
-  thread("s:formulaire d'inscription en erreur", "Boîte de réception", [
-    ["in", "sarah", 30, "Formulaire d’inscription en erreur",
-      `Salut Charles,\n\nUn participant vient de m’écrire : le formulaire d’inscription au Nova Summit renvoie une erreur 500 à la validation. Tu peux regarder rapidement ? On risque de perdre des inscriptions.\n\nSarah`],
+  thread("s:champ régime alimentaire", "Boîte de réception", [
+    ["in", "sarah", 30, "Formulaire d’inscription : champ « Régime alimentaire »",
+      `Salut Charles,\n\nPour le déjeuner du Nova Summit, le traiteur a besoin de connaître les régimes alimentaires des participants. Tu peux ajouter un champ « Régime alimentaire » au formulaire d’inscription aujourd’hui ?\n\nSarah`],
   ]);
-  task({ key: "s:formulaire d'inscription en erreur", kind: "a_faire", prio: "haute", dl: 0, dlt: "estimee", who: "sarah", src: "ia", conf: 0.91,
-    title: "Corriger l’erreur 500 du formulaire d’inscription",
-    summary: "Un participant n’arrive pas à valider son inscription : le formulaire renvoie une erreur 500.",
-    ev: "le formulaire d’inscription au Nova Summit renvoie une erreur 500 à la validation",
-    steps: ["Reproduire l’erreur depuis la page d’inscription", "Consulter le journal d’erreurs PHP du site", "Corriger ou désactiver l’extension fautive", "Tester une inscription complète puis répondre à Sarah"],
-    draft: `Salut Sarah,\n\nJe regarde ça tout de suite et je te dis où on en est d’ici une heure.\n\n${SIGN_TU}` });
+  task({ key: "s:champ régime alimentaire", kind: "a_faire", prio: "haute", dl: 0, dlt: "explicite", who: "sarah", src: "ia", conf: 0.91,
+    title: "Ajouter le champ « Régime alimentaire » au formulaire d’inscription",
+    summary: "Le traiteur a besoin des régimes alimentaires des participants : Sarah demande un nouveau champ dans le formulaire.",
+    ev: "Tu peux ajouter un champ « Régime alimentaire » au formulaire d’inscription aujourd’hui ?",
+    steps: ["Ajouter le champ (liste : aucun, végétarien, végétalien, sans gluten, autre)", "Inclure le champ dans l’export des inscriptions", "Tester une inscription complète", "Prévenir Sarah que c’est en ligne"],
+    draft: `Salut Sarah,\n\nC’est noté : j’ajoute le champ « Régime alimentaire » au formulaire aujourd’hui et je l’inclus dans l’export pour le traiteur.\n\n${SIGN_TU}` });
 
   thread("t:ticket #4821", "Support / Hostline", [
     ["in", "hostline", 120, "[Hostline] Ticket #4821 — Migration PHP 8.3 du site principal (Waiting for reply: Customer)",
@@ -118,7 +116,7 @@
     ["in", "hostline", 52, "[Hostline] Ticket #4821 — Migration PHP 8.3 du site principal (Waiting for reply: Customer)",
       `Bonjour,\n\nL’accès à la préproduction est prolongé jusqu’à ce soir. Merci de nous confirmer le résultat de vos tests afin que nous fixions la date de bascule.\n\nCordialement,\nSupport Hostline`],
   ]);
-  task({ key: "t:ticket #4821", kind: "a_faire", prio: "moyenne", dl: -2, dlt: "estimee", who: "hostline", src: "local", conf: 0.7,
+  task({ key: "t:ticket #4821", kind: "a_faire", prio: "moyenne", dl: 1, dlt: "estimee", who: "hostline", src: "local", conf: 0.7,
     title: "Ticket 4821 — Répondre à Hostline : résultat des tests PHP 8.3",
     summary: "Hostline attend notre confirmation des tests sur la préproduction pour fixer la date de bascule vers PHP 8.3.",
     ev: "Merci de nous confirmer le résultat de vos tests afin que nous fixions la date de bascule",
@@ -128,10 +126,10 @@
   thread("s:infos pratiques", "Projets / Nova Summit", [
     ["in", "lea", 80, "Page Infos pratiques",
       `Charles, on a besoin de la page Infos pratiques (accès, hôtels, parking) avant la fin de la semaine. Tu peux la préparer ?\n\nLéa`],
-    ["out", "lea", 52, "RE: Page Infos pratiques",
+    ["out", "lea", 20, "RE: Page Infos pratiques",
       `Hello Léa,\n\nOui, je la publie demain matin et je t’envoie le lien pour relecture.\n\nCharles`],
   ]);
-  task({ key: "s:infos pratiques", kind: "engagement", prio: "moyenne", dl: -1, dlt: "explicite", who: "lea", src: "ia", conf: 0.78,
+  task({ key: "s:infos pratiques", kind: "engagement", prio: "moyenne", dl: 0, dlt: "explicite", who: "lea", src: "ia", conf: 0.78,
     title: "Publier la page Infos pratiques et envoyer le lien à Léa",
     summary: "J’ai promis à Léa de publier la page Infos pratiques « demain matin » et de lui envoyer le lien pour relecture.",
     ev: "je la publie demain matin et je t’envoie le lien pour relecture",
@@ -142,7 +140,7 @@
     ["out", "ines", 110, "Accès à l’outil d’e-mailing",
       `Salut Inès,\n\nPeux-tu me donner un accès à l’outil d’e-mailing pour créer la liste « Exposants 2027 » ? J’en ai besoin pour préparer le prochain envoi.\n\nMerci,\nCharles`],
   ]);
-  task({ key: "s:accès à l'outil d'e-mailing", kind: "en_attente", prio: "moyenne", dl: -1, dlt: "estimee", who: "ines", src: "local", conf: 0.6,
+  task({ key: "s:accès à l'outil d'e-mailing", kind: "en_attente", prio: "moyenne", dl: 0, dlt: "estimee", who: "ines", src: "local", conf: 0.6,
     title: "Relancer Inès si pas de réponse : accès à l’outil d’e-mailing",
     summary: "J’ai demandé à Inès un accès à l’outil d’e-mailing pour créer la liste « Exposants 2027 ».",
     ev: "Peux-tu me donner un accès à l’outil d’e-mailing pour créer la liste « Exposants 2027 » ?",
@@ -165,45 +163,43 @@
     ["in", "sarah", 50, "Bio de Camille Roux (keynote) pour la page Intervenants",
       `Salut Charles,\n\nVoici la bio de Camille Roux pour la page Intervenants :\n\n« Camille Roux dirige la recherche UX chez Orbis Labs. Elle intervient depuis dix ans sur l’accessibilité des événements hybrides. »\n\nTu peux la mettre en ligne dès aujourd’hui ? Camille la relit ce soir. Sa photo arrivera directement de sa part.\n\nSarah`],
   ]);
-  task({ key: "s:bio camille roux", kind: "a_faire", prio: "moyenne", dl: 0, dlt: "explicite", who: "sarah", src: "ia", conf: 0.84,
+  task({ key: "s:bio camille roux", kind: "a_faire", prio: "moyenne", dl: 0, dlt: "explicite", who: "sarah", src: "ia", conf: 0.84, lot: "Fiches intervenants",
     title: "Mettre en ligne la bio de Camille Roux (page Intervenants)",
     summary: "Sarah envoie la bio de la keynote à publier aujourd’hui ; Camille la relit ce soir.",
     ev: "Tu peux la mettre en ligne dès aujourd’hui ?",
     steps: ["Créer la fiche intervenant de Camille Roux", "Coller la bio validée par Sarah", "Prévenir Sarah que la fiche est en ligne"],
     draft: `Salut Sarah,\n\nC’est fait côté contenu : la fiche de Camille est en ligne sans photo pour l’instant, je l’ajoute dès réception.\n\n${SIGN_TU}` });
 
-  thread("a:wordfence mises à jour requises", "Alertes sites", [
-    ["in", "wf", 96, "[Wordfence] Mises à jour requises sur 2 plugins — novasummit.example.com",
-      `Wordfence a détecté 2 plugins à mettre à jour sur novasummit.example.com :\n\n- Event Calendar Pro 5.1.9 → 5.2.1 (vulnérabilité CSRF, gravité moyenne)\n- Forms Plus 3.4.0 → 3.4.2\n\nConnectez-vous au tableau de bord WordPress pour appliquer les mises à jour.`],
-    ["in", "wf", 20, "[Wordfence] Mises à jour requises sur 3 plugins — novasummit.example.com",
-      `Wordfence a détecté 3 plugins à mettre à jour sur novasummit.example.com :\n\n- Event Calendar Pro 5.1.9 → 5.2.1 (vulnérabilité CSRF, corrigée dans la 5.2.1)\n- Forms Plus 3.4.0 → 3.4.2 (faille XSS stockée, gravité élevée)\n- SEO Boost 2.1.0 → 2.1.1\n\nVulnérabilité critique : appliquez les mises à jour dans les plus brefs délais.`],
+  thread("s:fiches nouveaux intervenants", "Projets / Nova Summit", [
+    ["in", "sarah", 22, "Deux nouveaux intervenants : Karim Haddad et Julie Morel",
+      `Salut Charles,\n\nKarim Haddad et Julie Morel ont confirmé leur venue au Nova Summit. Je t’envoie leurs bios et leurs photos en pièce jointe. Tu peux créer leurs fiches sur la page Intervenants aujourd’hui ? On les annonce dans la newsletter de demain.\n\nSarah`, true],
   ]);
-  task({ key: "a:wordfence mises à jour requises", kind: "a_faire", prio: "haute", dl: 0, dlt: "estimee", who: "wf", src: "claude", conf: 0.93, lot: "Sécurité WordPress", created: 19,
-    title: "Mettre à jour 3 plugins vulnérables sur novasummit (CSRF, XSS)",
-    summary: "Un seul rapport consolidé : Event Calendar Pro (CSRF), Forms Plus (XSS stockée) et SEO Boost sont à mettre à jour.",
-    ev: "Vulnérabilité critique : appliquez les mises à jour dans les plus brefs délais",
-    steps: ["Sauvegarder le site", "Mettre à jour Event Calendar Pro, Forms Plus et SEO Boost", "Tester le formulaire d’inscription et le calendrier", "Relancer un scan Wordfence"],
-    draft: null });
+  task({ key: "s:fiches nouveaux intervenants", kind: "a_faire", prio: "haute", dl: 0, dlt: "explicite", who: "sarah", src: "ia", conf: 0.9, lot: "Fiches intervenants", created: 19,
+    title: "Créer les fiches de Karim Haddad et Julie Morel (page Intervenants)",
+    summary: "Deux nouveaux intervenants confirmés, annoncés dans la newsletter de demain : leurs fiches doivent être en ligne aujourd’hui.",
+    ev: "Tu peux créer leurs fiches sur la page Intervenants aujourd’hui ?",
+    steps: ["Créer les deux fiches intervenant", "Coller les bios et ajouter les photos", "Vérifier l’affichage sur mobile", "Prévenir Sarah que les fiches sont en ligne"],
+    draft: `Salut Sarah,\n\nC’est noté : je crée les fiches de Karim et Julie aujourd’hui et je te préviens dès qu’elles sont en ligne.\n\n${SIGN_TU}` });
 
-  thread("a:site monitor mise à jour wordpress", "Alertes sites", [
-    ["in", "wpm", 40, "Mise à jour de WordPress 6.8.3 disponible — novafestival.example.com",
-      `Une mise à jour de sécurité de WordPress est disponible pour novafestival.example.com (6.8.2 → 6.8.3).\n\nCette version corrige 3 vulnérabilités. Nous vous recommandons de l’installer rapidement.`],
+  thread("a:rapport d'audience hebdomadaire", "Rapports automatiques", [
+    ["in", "stats", 40, "Rapport d’audience hebdomadaire — novasummit.example.com",
+      `Votre rapport hebdomadaire est disponible : 12 480 visites (+9 %), 3 120 visites sur la page Programme, 41 % du trafic depuis la newsletter.`],
   ]);
-  task({ key: "a:site monitor mise à jour wordpress", kind: "a_faire", prio: "moyenne", dl: 2, dlt: "estimee", who: "wpm", src: "local", conf: 0.66, lot: "Sécurité WordPress",
-    title: "Traiter : Mise à jour de WordPress 6.8.3 disponible — novafestival",
-    summary: "Mise à jour de sécurité de WordPress (6.8.2 → 6.8.3) disponible pour le site Festival.",
-    ev: "Cette version corrige 3 vulnérabilités",
-    steps: ["Relire la demande", "Faire le nécessaire", "Confirmer que c’est fait"], draft: null });
+  task({ key: "a:rapport d'audience hebdomadaire", kind: "a_faire", prio: "moyenne", dl: 2, dlt: "estimee", who: "stats", src: "local", conf: 0.66,
+    title: "Partager le rapport d’audience de la semaine avec Léa",
+    summary: "Rapport hebdomadaire : 12 480 visites (+9 %), la page Programme et la newsletter en tête.",
+    ev: "Votre rapport hebdomadaire est disponible",
+    steps: ["Relire le rapport", "Résumer les trois chiffres clés", "Envoyer le résumé à Léa"], draft: null });
 
-  thread("a:certificat ssl expire", "Alertes sites", [
-    ["in", "hostmon", 30, "Votre certificat SSL pour billetterie.novasummit.example.com expire dans 12 jours",
-      `Le certificat SSL de billetterie.novasummit.example.com expirera dans 12 jours.\n\nLe renouvellement automatique a échoué (erreur de validation DNS). Merci de vérifier l’enregistrement DNS ou de lancer un renouvellement manuel depuis votre espace client.`],
+  thread("s:photos intervenants format carré", "Projets / Nova Summit", [
+    ["in", "yanis", 30, "Photos des intervenants au format carré",
+      `Hello Charles,\n\nAvec le nouveau thème, les photos de la page Intervenants doivent passer au format carré (800 × 800). Tu peux les recadrer d’ici la fin de semaine ? Je t’ai mis un gabarit dans le Drive.\n\nYanis`],
   ]);
-  task({ key: "a:certificat ssl expire", kind: "a_faire", prio: "haute", dl: 5, dlt: "estimee", who: "hostmon", src: "ia", conf: 0.82, lot: "Sécurité WordPress",
-    title: "Corriger le renouvellement automatique du certificat SSL de la billetterie",
-    summary: "Le renouvellement du certificat a échoué (validation DNS) : la billetterie passerait en erreur HTTPS dans 12 jours.",
-    ev: "Le renouvellement automatique a échoué (erreur de validation DNS)",
-    steps: ["Vérifier l’enregistrement DNS de la billetterie", "Relancer le renouvellement depuis l’espace client Hostline", "Contrôler la date d’expiration du nouveau certificat"], draft: null });
+  task({ key: "s:photos intervenants format carré", kind: "a_faire", prio: "moyenne", dl: 5, dlt: "estimee", who: "yanis", src: "ia", conf: 0.82, lot: "Fiches intervenants",
+    title: "Recadrer les photos de la page Intervenants au format carré",
+    summary: "Le nouveau thème demande des photos d’intervenants en 800 × 800 ; Yanis fournit un gabarit.",
+    ev: "les photos de la page Intervenants doivent passer au format carré (800 × 800)",
+    steps: ["Récupérer le gabarit de Yanis", "Recadrer et remplacer les photos", "Vérifier la page Intervenants sur mobile"], draft: null });
 
   /* ---------- Cette semaine : logos, transferts, engagements, attentes ---------- */
   thread("s:logos sponsors pack v3", "Projets / Nova Summit", [
@@ -230,17 +226,17 @@
     steps: ["Attendre la réponse de Marc", "Relancer Marc si rien n’est arrivé"],
     draft: `Bonjour Marc,\n\nJe me permets de revenir vers vous au sujet de mon précédent message : avez-vous pu retrouver une version haute définition du logo ?\n\n${SIGN_VOUS}` });
 
-  thread("s:facture hostline octobre", "Boîte de réception", [
-    ["in", "nora", 22, "Facture Hostline octobre — validation",
-      `Bonjour Charles,\n\nJe reçois la facture Hostline d’octobre (1 248 € HT, soit +18 % par rapport à septembre à cause de l’option sauvegarde). Peux-tu me confirmer qu’elle est conforme ? Sinon je la transmets à Hugo pour arbitrage.\n\nNora`],
+  thread("s:visuels dossier de presse", "Boîte de réception", [
+    ["in", "nora", 22, "Dossier de presse — visuels du Nova Summit",
+      `Bonjour Charles,\n\nJe prépare le dossier de presse du Nova Summit. Peux-tu m’envoyer les visuels officiels (logo, affiche, photos de l’édition précédente) et me dire qui valide les textes ?\n\nNora`],
   ]);
-  task({ key: "s:facture hostline octobre", kind: "a_transferer", prio: "moyenne", dl: 4, dlt: "estimee", who: "nora", src: "ia", conf: 0.74,
-    deleg: ["Hugo Bernard", "Sujet de son périmètre : budget, facturation, hébergement, décisions"],
-    title: "Répondre à Nora : facture Hostline d’octobre (+18 %), à confier à Hugo",
-    summary: "La facture d’octobre augmente de 18 % à cause de l’option sauvegarde ; Nora demande une validation avant de payer.",
-    ev: "Peux-tu me confirmer qu’elle est conforme ?",
-    steps: ["Vérifier l’option sauvegarde facturée", "Transférer la décision à Hugo", "Prévenir Nora"],
-    draft: `Bonjour Nora,\n\nMerci pour l’alerte. L’option sauvegarde a bien été activée en septembre, mais la validation du budget revient à Hugo : je lui transfère la facture.\n\n${SIGN_TU}` });
+  task({ key: "s:visuels dossier de presse", kind: "a_transferer", prio: "moyenne", dl: 4, dlt: "estimee", who: "nora", src: "ia", conf: 0.74,
+    deleg: ["Sarah Cohen", "Sujet de son périmètre : contenus des événements, intervenants, partenariats, presse"],
+    title: "Répondre à Nora : visuels du dossier de presse, à confier à Sarah",
+    summary: "Nora prépare le dossier de presse et demande les visuels officiels ainsi que le bon interlocuteur pour valider les textes.",
+    ev: "Peux-tu m’envoyer les visuels officiels",
+    steps: ["Envoyer à Nora le lien vers les visuels officiels", "Transférer la validation des textes à Sarah", "Prévenir Nora"],
+    draft: `Bonjour Nora,\n\nVoici le lien vers les visuels officiels. Pour la validation des textes, c’est Sarah qui pilote la communication : je la mets en copie.\n\n${SIGN_TU}` });
 
   thread("s:bannière festival", "Boîte de réception", [
     ["in", "sarah", 36, "Bannière pour la page Festival",
@@ -266,18 +262,18 @@
     steps: ["Transférer le mail à Sarah", "Répondre à Julien Garnier en mettant Sarah en copie"],
     draft: `Bonjour Julien,\n\nMerci pour votre proposition. Sarah Cohen, responsable communication, est la bonne interlocutrice : je la mets en copie de ce message.\n\n${SIGN_VOUS}` });
 
-  thread("s:comparatif hébergeurs", "Projets / Budget 2027", [
-    ["in", "hugo", 75, "Budget hébergement 2027",
-      `Charles, pour le budget 2027 j’aurais besoin d’un comparatif des offres d’hébergement (Hostline et alternatives) avec les coûts de migration. Tu peux me faire ça ?\n\nHugo`],
-    ["out", "hugo", 70, "RE: Budget hébergement 2027",
-      `Salut Hugo,\n\nOui, je te fais un retour avec un comparatif ${wd(2)} au plus tard.\n\nCharles`],
+  thread("s:bilan des inscriptions", "Projets / Nova Summit", [
+    ["in", "hugo", 75, "Bilan des inscriptions de la semaine",
+      `Charles, pour le point de lundi, tu peux m’envoyer un bilan des inscriptions de la semaine (nombre, et d’où viennent les inscrits : newsletter, réseaux, partenaires) ?\n\nHugo`],
+    ["out", "hugo", 70, "RE: Bilan des inscriptions de la semaine",
+      `Salut Hugo,\n\nOui, je t’envoie le bilan ${wd(2)} au plus tard.\n\nCharles`],
   ]);
-  task({ key: "s:comparatif hébergeurs", kind: "engagement", prio: "moyenne", dl: 2, dlt: "explicite", who: "hugo", src: "claude", conf: 0.81,
-    title: "Envoyer à Hugo le comparatif des offres d’hébergement 2027",
-    summary: `Promesse faite à Hugo : un comparatif Hostline et alternatives, avec coûts de migration, d’ici ${wd(2)}.`,
-    ev: `je te fais un retour avec un comparatif ${wd(2)} au plus tard`,
-    steps: ["Lister 3 hébergeurs candidats et leurs tarifs", "Estimer le coût et la durée d’une migration", "Envoyer le tableau comparatif à Hugo"],
-    draft: `Salut Hugo,\n\nComme promis, voici le comparatif des offres d’hébergement pour 2027 : …\n\n${SIGN_TU}` });
+  task({ key: "s:bilan des inscriptions", kind: "engagement", prio: "moyenne", dl: 2, dlt: "explicite", who: "hugo", src: "ia", conf: 0.81,
+    title: "Envoyer à Hugo le bilan des inscriptions de la semaine",
+    summary: `Promesse faite à Hugo : le bilan des inscriptions de la semaine, avec leurs sources, d’ici ${wd(2)}.`,
+    ev: `je t’envoie le bilan ${wd(2)} au plus tard`,
+    steps: ["Exporter les inscriptions de la semaine", "Résumer les sources (newsletter, réseaux, partenaires)", "Envoyer le bilan à Hugo"],
+    draft: `Salut Hugo,\n\nComme promis, voici le bilan des inscriptions de la semaine : …\n\n${SIGN_TU}` });
 
   thread("s:liste des pages à relire", "Boîte de réception", [
     ["in", "sarah", 30, "Relecture du site avant l’ouverture des inscriptions",
@@ -293,17 +289,17 @@
     draft: `Salut Sarah,\n\nComme promis, voici la liste des pages à relire avant l’ouverture des inscriptions : …\n\n${SIGN_TU}` });
 
   thread("t:ticket #4790", "Support / Hostline", [
-    ["in", "hostline", 90, "[Hostline] Ticket #4790 — Restauration de sauvegarde du site Festival (Waiting for reply: Customer)",
-      `Bonjour,\n\nPouvez-vous préciser la date de la sauvegarde à restaurer pour le site novafestival.example.com ?\n\nCordialement,\nSupport Hostline`],
-    ["out", "hostline", 48, "RE: [Hostline] Ticket #4790 — Restauration de sauvegarde du site Festival (Waiting for reply: Provider)",
-      `Bonjour,\n\nIl s’agit de la sauvegarde du début du mois dernier, avant le déploiement du nouveau thème.\n\nCordialement,\nCharles A.`],
-    ["in", "hostline", 30, "[Hostline] Ticket #4790 — Restauration de sauvegarde du site Festival (Waiting for reply: Provider)",
-      `Bonjour,\n\nNous avons bien reçu votre précision et préparons la restauration. Nous revenons vers vous dès que le site est restauré en préproduction.\n\nCordialement,\nSupport Hostline`],
+    ["in", "hostline", 90, "[Hostline] Ticket #4790 — Création du sous-domaine programme.novafestival (Waiting for reply: Customer)",
+      `Bonjour,\n\nPouvez-vous nous confirmer le nom exact du sous-domaine à créer pour le site novafestival.example.com ?\n\nCordialement,\nSupport Hostline`],
+    ["out", "hostline", 48, "RE: [Hostline] Ticket #4790 — Création du sous-domaine programme.novafestival (Waiting for reply: Provider)",
+      `Bonjour,\n\nIl s’agit de programme.novafestival.example.com, pour héberger le programme interactif de l’édition 2027.\n\nCordialement,\nCharles A.`],
+    ["in", "hostline", 30, "[Hostline] Ticket #4790 — Création du sous-domaine programme.novafestival (Waiting for reply: Provider)",
+      `Bonjour,\n\nNous avons bien reçu votre précision et créons le sous-domaine. Nous revenons vers vous dès qu’il est actif.\n\nCordialement,\nSupport Hostline`],
   ]);
   task({ key: "t:ticket #4790", kind: "en_attente", prio: "moyenne", dl: 2, dlt: "estimee", who: "hostline", src: "local", conf: 0.7,
-    title: "Ticket 4790 — Attendre la réponse du support : restauration de la sauvegarde du site Festival",
-    summary: "Hostline prépare la restauration en préproduction et reviendra vers nous.",
-    ev: "Nous revenons vers vous dès que le site est restauré en préproduction",
+    title: "Ticket 4790 — Attendre la réponse du support : création du sous-domaine du programme",
+    summary: "Hostline crée le sous-domaine programme.novafestival et reviendra vers nous dès qu’il est actif.",
+    ev: "Nous revenons vers vous dès qu’il est actif",
     steps: ["Attendre la réponse de Hostline", "Relancer Hostline si rien n’est arrivé"], draft: null });
 
   thread("s:photo hd camille", "Boîte de réception", [
@@ -386,14 +382,14 @@
     steps: ["Retrouver les accès", "Répondre à Hugo"], draft: `Salut Hugo,\n\nMerci pour ton message, je m’en occupe et je te reviens rapidement.\n\n${SIGN_TU}` });
 
   /* ---------- Reportée ---------- */
-  thread("a:domaine à renouveler", "Alertes sites", [
-    ["in", "hostmon", 100, "Votre nom de domaine novafestival.example.com arrive à échéance",
-      `Votre nom de domaine novafestival.example.com arrive à échéance dans 10 jours. Pensez à le renouveler depuis votre espace client pour éviter toute interruption.`],
+  thread("s:page édition 2027", "Projets / Édition 2027", [
+    ["in", "lea", 100, "Page « Édition 2027 »",
+      `Charles, on ouvre la page « Édition 2027 » en janvier. Pas d’urgence, mais tu peux préparer une première maquette quand tu auras un moment ?\n\nLéa`],
   ]);
-  task({ key: "a:domaine à renouveler", kind: "a_faire", prio: "basse", dl: 10, dlt: "explicite", who: "hostmon", src: "ia", conf: 0.8,
+  task({ key: "s:page édition 2027", kind: "a_faire", prio: "basse", dl: 10, dlt: "estimee", who: "lea", src: "ia", conf: 0.8,
     snooze: (() => { const d = new Date(); d.setDate(d.getDate() + 3); return `${ymd(d)}T09:00`; })(),
-    title: "Renouveler le nom de domaine novafestival.example.com", summary: "Le domaine du site Festival arrive à échéance dans 10 jours.", ev: "Pensez à le renouveler depuis votre espace client",
-    steps: ["Renouveler le domaine depuis l’espace client", "Contrôler la nouvelle date d’échéance"], draft: null });
+    title: "Préparer une première maquette de la page « Édition 2027 »", summary: "Page à ouvrir en janvier ; Léa demande une première maquette, sans urgence.", ev: "tu peux préparer une première maquette quand tu auras un moment ?",
+    steps: ["Lister les blocs de la page", "Préparer la maquette", "La montrer à Léa"], draft: null });
 
   /* ---------- Terminées ---------- */
   thread("s:article programme", "Projets / Nova Summit", [
@@ -410,19 +406,20 @@
   task({ key: "s:planning de recette", kind: "a_faire", prio: "moyenne", who: "lea", src: "ia", conf: 0.8, status: "fait", created: 27, updated: 4,
     title: "Répondre à Léa : planning de recette", summary: "Léa demande de confirmer les créneaux de recette.", ev: "Tu peux me confirmer les créneaux de recette de cette semaine ?", steps: [], notes: "[répondu dans le fil]" });
 
-  thread("a:forms plus mise à jour", "Alertes sites", [
-    ["in", "wf", 40, "[Wordfence] Mise à jour requise : Forms Plus 3.3.9 → 3.4.0", `Forms Plus 3.4.0 corrige une faille XSS. Mettez à jour dès que possible.`],
+  thread("s:plan d'accès du lieu", "Projets / Nova Summit", [
+    ["in", "sarah", 40, "Plan d’accès du lieu", `Charles, le plan d’accès du lieu est prêt (PDF en pièce jointe). Tu peux l’ajouter à la page Infos pratiques ?\n\nSarah`, true],
+    ["out", "sarah", 5, "RE: Plan d’accès du lieu", `C’est en ligne sur la page Infos pratiques.\n\nCharles`],
   ]);
-  task({ key: "a:forms plus mise à jour", kind: "a_faire", prio: "haute", who: "wf", src: "local", conf: 0.8, status: "fait", created: 39, updated: 5, lot: "Sécurité WordPress",
-    title: "Mettre à jour le plugin Forms Plus (faille XSS)", summary: "Forms Plus 3.4.0 corrige une faille XSS.", ev: "Forms Plus 3.4.0 corrige une faille XSS", steps: [] });
+  task({ key: "s:plan d'accès du lieu", kind: "a_faire", prio: "moyenne", who: "sarah", src: "ia", conf: 0.8, status: "fait", created: 39, updated: 5,
+    title: "Ajouter le plan d’accès du lieu à la page Infos pratiques", summary: "Sarah fournit le plan d’accès en PDF.", ev: "Tu peux l’ajouter à la page Infos pratiques ?", steps: [], notes: "[répondu dans le fil]" });
 
   thread("t:ticket #4815", "Support / Hostline", [
-    ["in", "hostline", 80, "[Hostline] Ticket #4815 — Lenteurs sur novasummit.example.com (Waiting for reply: Customer)", `Bonjour,\n\nPouvez-vous nous indiquer les heures auxquelles vous constatez des lenteurs ?\n\nSupport Hostline`],
-    ["out", "hostline", 60, "RE: [Hostline] Ticket #4815 — Lenteurs sur novasummit.example.com (Waiting for reply: Provider)", `Bonjour,\n\nPrincipalement entre 9 h et 10 h, au moment de l’envoi des newsletters.\n\nCharles A.`],
-    ["in", "hostline", 26, "[Hostline] Ticket #4815 — Lenteurs sur novasummit.example.com (Resolved)", `Bonjour,\n\nNous avons augmenté les ressources de votre offre. Le ticket est résolu.\n\nSupport Hostline`],
+    ["in", "hostline", 80, "[Hostline] Ticket #4815 — Accès pour l’agence photo (Waiting for reply: Customer)", `Bonjour,\n\nPouvez-vous nous indiquer l’adresse e-mail de l’agence photo à qui créer l’accès ?\n\nSupport Hostline`],
+    ["out", "hostline", 60, "RE: [Hostline] Ticket #4815 — Accès pour l’agence photo (Waiting for reply: Provider)", `Bonjour,\n\nIl s’agit de contact@agence-photo.example.com, pour déposer les photos de l’édition 2026.\n\nCharles A.`],
+    ["in", "hostline", 26, "[Hostline] Ticket #4815 — Accès pour l’agence photo (Resolved)", `Bonjour,\n\nL’accès a été créé et envoyé à l’agence. Le ticket est résolu.\n\nSupport Hostline`],
   ]);
   task({ key: "t:ticket #4815", kind: "a_faire", prio: "moyenne", who: "hostline", src: "local", conf: 0.7, status: "fait", created: 80, updated: 26,
-    title: "Ticket 4815 — Répondre à Hostline : lenteurs de novasummit", summary: "Ticket résolu par Hostline.", ev: "Le ticket est résolu.", steps: [], notes: "[ticket résolu]" });
+    title: "Ticket 4815 — Répondre à Hostline : accès pour l’agence photo", summary: "Ticket résolu par Hostline.", ev: "Le ticket est résolu.", steps: [], notes: "[ticket résolu]" });
 
   thread("s:relecture newsletter octobre", "Newsletters", [
     ["in", "ines", 60, "Relecture de la newsletter d’octobre", `Peux-tu relire la newsletter avant l’envoi ?\n\nInès`],
@@ -431,11 +428,11 @@
   task({ key: "s:relecture newsletter octobre", kind: "a_faire", prio: "moyenne", who: "ines", src: "ia", conf: 0.8, status: "fait", created: 59, updated: 50,
     title: "Relire la newsletter d’octobre", summary: "Inès demande une relecture avant l’envoi.", ev: "Peux-tu relire la newsletter avant l’envoi ?", steps: [], notes: "[répondu dans le fil]" });
 
-  thread("s:sauvegarde automatique festival", "Alertes sites", [
-    ["in", "wpm", 30, "Sauvegarde automatique du site Festival terminée", `La sauvegarde automatique de novafestival.example.com s’est terminée avec succès.`],
+  thread("s:rapport mensuel d'audience", "Rapports automatiques", [
+    ["in", "stats", 30, "Votre rapport mensuel d’audience est disponible", `Le rapport mensuel de novafestival.example.com est disponible dans votre espace.`],
   ]);
-  task({ key: "s:sauvegarde automatique festival", kind: "info", prio: "basse", who: "wpm", src: "local", conf: 0.3, status: "ignore", created: 30, updated: 22,
-    title: "À lire : Sauvegarde automatique du site Festival terminée", summary: "Sauvegarde terminée avec succès, rien à faire.", ev: "s’est terminée avec succès", steps: [] });
+  task({ key: "s:rapport mensuel d'audience", kind: "info", prio: "basse", who: "stats", src: "local", conf: 0.3, status: "ignore", created: 30, updated: 22,
+    title: "À lire : Rapport mensuel d’audience du site Festival", summary: "Rapport disponible, rien à faire.", ev: "est disponible dans votre espace", steps: [] });
 
   /* ===================== État du moteur simulé ===================== */
   const INSTALLED = ago(12 * 24);
@@ -453,18 +450,18 @@
   }
   [["sync", "3 nouveaux mails · 3 fils analysés"], ["lire", "Léa Martin · Page Programme — créneaux journée 2"],
    ["règles", "Page Programme — créneaux journée 2 → à faire · ia en file"], ["ia lit", "Page Programme — créneaux journée 2"],
-   ["ia", "à faire + à faire · 14 s"], ["lire", "Hostline Support · [Hostline] Ticket #4790 — Restauration de sauvegarde"],
-   ["règles", "Ticket 4790 — Restauration de sauvegarde → en attente"], ["écarter", "Event Weekly · newsletter"],
+   ["ia", "à faire + à faire · 14 s"], ["lire", "Hostline Support · [Hostline] Ticket #4790 — Création du sous-domaine"],
+   ["règles", "Ticket 4790 — Création du sous-domaine → en attente"], ["écarter", "Event Weekly · newsletter"],
    ["lire", "Sarah Cohen · Relecture du site avant l’ouverture des inscriptions"], ["règles", "Relecture du site → engagement · ia en file"],
    ["ia lit", "Relecture du site avant l’ouverture des inscriptions"], ["ia", "engagement · 9 s"], ["apprendre", "+1 décision (fait)"],
-   ["zéro oubli", "Sarah · Formulaire d’inscription en erreur"], ["lire", "Wordfence · Mises à jour requises sur 3 plugins"],
-   ["règles", "Mises à jour requises sur # plugins → à faire"], ["✦ claude", "analyse d’un fil à la demande"]].forEach(([v, t]) => log(v, t));
+   ["zéro oubli", "Sarah · Champ « Régime alimentaire » du formulaire"], ["lire", "Sarah Cohen · Deux nouveaux intervenants"],
+   ["règles", "Fiches intervenants → à faire · lot"], ["✦ claude", "analyse d’un fil à la demande"]].forEach(([v, t]) => log(v, t));
 
-  const FEED = [["lire", "Hostline Support · [Hostline] Ticket #4790 — Restauration de sauvegarde"], ["règles", "Ticket 4790 → en attente · ia en file"],
-    ["ia lit", "Ticket 4790 — Restauration de sauvegarde"], ["ia", "en attente · 8 s"], ["écarter", "Event Weekly · newsletter"],
+  const FEED = [["lire", "Hostline Support · [Hostline] Ticket #4790 — Création du sous-domaine"], ["règles", "Ticket 4790 → en attente · ia en file"],
+    ["ia lit", "Ticket 4790 — Création du sous-domaine"], ["ia", "en attente · 8 s"], ["écarter", "Event Weekly · newsletter"],
     ["lire", "Yanis Petit · Nouveaux logos sponsors (pack v3)"], ["règles", "Nouveaux logos sponsors → à faire · ia en file"],
     ["ia lit", "Nouveaux logos sponsors (pack v3)"], ["ia", "à faire · 12 s"], ["écarter", "Nouvelle inscription · formulaire"],
-    ["zéro oubli", "Nora · Facture Hostline octobre"], ["apprendre", "+1 décision (reclassement)"], ["lire", "Marc Dubois · Logo Alto Sports pour votre site"],
+    ["zéro oubli", "Nora · Visuels du dossier de presse"], ["apprendre", "+1 décision (reclassement)"], ["lire", "Marc Dubois · Logo Alto Sports pour votre site"],
     ["règles", "Logo Alto Sports → en attente"]];
   let feedI = 0;
   function feed() {
@@ -584,7 +581,7 @@
     };
   }
 
-  const FOLDER_LIST = [["Boîte de réception", 842], ["Éléments envoyés", 311], ["Alertes sites", 96], ["Newsletters", 214], ["Projets / Budget 2027", 23],
+  const FOLDER_LIST = [["Boîte de réception", 842], ["Éléments envoyés", 311], ["Rapports automatiques", 96], ["Newsletters", 214], ["Projets / Édition 2027", 23],
     ["Projets / Festival Nova Lyon", 64], ["Projets / Nova Summit", 187], ["Support / Hostline", 58], ["Archives", 1203], ["Brouillons", 4],
     ["Courrier indésirable", 37], ["Éléments supprimés", 129]];
   const SYSTEM = /^(courrier ind|junk|éléments supprim|brouillons|archives)/i;
@@ -613,9 +610,9 @@
     { key: "s:maquette mobile billetterie", who: "yanis", subject: "Maquette mobile de la page Billetterie", folder: "Projets / Nova Summit", att: true,
       body: `Hello Charles,\n\nLa maquette mobile de la page Billetterie est prête (Figma en pièce jointe). Peux-tu l’intégrer pour la recette de ${wd(3)} ?\n\nYanis`,
       task: { kind: "a_faire", prio: "moyenne", dl: 3, title: "Intégrer la maquette mobile de la page Billetterie", summary: "Yanis fournit la maquette mobile à intégrer avant la recette.", ev: "Peux-tu l’intégrer pour la recette" } },
-    { key: "t:ticket #4830", who: "hostmon", subject: "[Hostline] Ticket #4830 — Pic de trafic détecté sur novasummit.example.com (Waiting for reply: Customer)", folder: "Support / Hostline",
-      body: `Bonjour,\n\nUn pic de trafic inhabituel (x6) a été détecté sur novasummit.example.com. Merci de confirmer s’il s’agit d’une campagne en cours, sinon nous activerons la protection anti-bot.\n\nSupport Hostline`,
-      task: { kind: "a_faire", prio: "haute", dl: 0, title: "Ticket 4830 — Répondre à Hostline : pic de trafic (campagne en cours ?)", summary: "Hostline demande si le pic de trafic correspond à une campagne ; sinon protection anti-bot.", ev: "Merci de confirmer s’il s’agit d’une campagne en cours" } },
+    { key: "s:visuel newsletter novembre", who: "ines", subject: "Visuel de la newsletter de novembre", folder: "Newsletters", att: true,
+      body: `Hello Charles,\n\nVoici le visuel de la newsletter de novembre (en pièce jointe). Tu peux l’intégrer dans le modèle et m’envoyer un test d’ici ${wd(2)} ?\n\nInès`,
+      task: { kind: "a_faire", prio: "moyenne", dl: 2, title: "Intégrer le visuel de la newsletter de novembre", summary: "Inès fournit le visuel à intégrer dans le modèle, avec un envoi test.", ev: "Tu peux l’intégrer dans le modèle et m’envoyer un test" } },
     { key: "s:accès stagiaire", who: "hugo", subject: "Accès WordPress pour la stagiaire", folder: "Boîte de réception",
       body: `Charles, la stagiaire communication arrive lundi : peux-tu lui créer un compte « Éditrice » sur novasummit et novafestival ?\n\nMerci,\nHugo`,
       task: { kind: "a_faire", prio: "moyenne", dl: 4, title: "Créer un compte Éditrice WordPress pour la stagiaire", summary: "Hugo demande deux comptes Éditrice pour l’arrivée de la stagiaire.", ev: "peux-tu lui créer un compte « Éditrice » sur novasummit et novafestival ?" } },
@@ -695,10 +692,10 @@
     }
     if (/retard/.test(low)) { const ids = open.filter((r) => VIEW.retard(r, c)).map((r) => r.id); return filter(ids, "En retard", `${ids.length} tâche${plural(ids.length, "", "s")} en retard, les plus anciennes d’abord.`); }
     if (/attente|relanc/.test(low)) { const ids = open.filter((r) => VIEW.en_attente(r, c)).map((r) => r.id); return filter(ids, "En attente", `Voici les ${ids.length} sujets où tu attends une réponse : ce sont tes relances à prévoir.`); }
-    if (/securit|plugin|wordpress|faille|vulnerab/.test(low)) { const ids = open.filter((r) => r.lot === "Sécurité WordPress").map((r) => r.id); return filter(ids, "Sécurité WordPress", `${ids.length} tâches de sécurité WordPress, à traiter en série.`); }
+    if (/intervenant|fiche|\bbio/.test(low)) { const ids = open.filter((r) => r.lot === "Fiches intervenants").map((r) => r.id); return filter(ids, "Fiches intervenants", `${ids.length} tâches sur les fiches intervenants, à traiter en série.`); }
     if (/urgent|prioritaire|haute|important/.test(low)) { const ids = open.filter((r) => r.priority === "haute").map((r) => r.id); return filter(ids, "Priorité haute", `${ids.length} tâches en priorité haute en ce moment.`); }
-    if (/hostline|ticket|support/.test(low)) { const ids = open.filter((r) => r._w === "hostline" || r._w === "hostmon").map((r) => r.id); return filter(ids, "Hostline", `${ids.length} tâches liées à Hostline (tickets de support et alertes).`); }
-    return { reply: "Mode démo : je réponds ici avec des réponses préparées. Essaie par exemple « qu’est-ce qui est en retard ? », « reporte ce qui vient de Léa à jeudi », « montre les tâches de sécurité WordPress » ou « sur quoi j’attends une réponse ? ». Dans la vraie application, la demande est comprise par l’IA locale ou par Claude.", actions: [] };
+    if (/hostline|ticket|support/.test(low)) { const ids = open.filter((r) => r._w === "hostline").map((r) => r.id); return filter(ids, "Hostline", `${ids.length} tâches liées à Hostline (tickets de support).`); }
+    return { reply: "Mode démo : je réponds ici avec des réponses préparées. Essaie par exemple « qu’est-ce qui est urgent ? », « reporte ce qui vient de Léa à jeudi », « montre les fiches intervenants » ou « sur quoi j’attends une réponse ? ». Dans la vraie application, la demande est comprise par l’IA locale ou par Claude.", actions: [] };
   }
 
   async function route(method, path, qs, body) {
