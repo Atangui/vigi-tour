@@ -8,7 +8,7 @@
 (function () {
   "use strict";
 
-  const REPO_URL = "";   // ex. "https://github.com/<compte>/vigie-tour" : ajoute un lien « Code source » au badge
+  const REPO_URL = "https://github.com/Atangui/vigi-tour";   // ex. "https://github.com/<compte>/vigie-tour" : ajoute un lien « Code source » au badge
 
   /* ===================== Utilitaires ===================== */
   const HOUR = 36e5;
@@ -691,7 +691,7 @@
       return filter(ids, `De ${first}`, `Voici les ${ids.length} tâches liées à ${first}.`);
     }
     if (/retard/.test(low)) { const ids = open.filter((r) => VIEW.retard(r, c)).map((r) => r.id); return filter(ids, "En retard", `${ids.length} tâche${plural(ids.length, "", "s")} en retard, les plus anciennes d’abord.`); }
-    if (/attente|relanc/.test(low)) { const ids = open.filter((r) => VIEW.en_attente(r, c)).map((r) => r.id); return filter(ids, "En attente", `Voici les ${ids.length} sujets où tu attends une réponse : ce sont tes relances à prévoir.`); }
+    if (/attente|attends|relanc/.test(low)) { const ids = open.filter((r) => VIEW.en_attente(r, c)).map((r) => r.id); return filter(ids, "En attente", `Voici les ${ids.length} sujets où tu attends une réponse : ce sont tes relances à prévoir.`); }
     if (/intervenant|fiche|\bbio/.test(low)) { const ids = open.filter((r) => r.lot === "Fiches intervenants").map((r) => r.id); return filter(ids, "Fiches intervenants", `${ids.length} tâches sur les fiches intervenants, à traiter en série.`); }
     if (/urgent|prioritaire|haute|important/.test(low)) { const ids = open.filter((r) => r.priority === "haute").map((r) => r.id); return filter(ids, "Priorité haute", `${ids.length} tâches en priorité haute en ce moment.`); }
     if (/hostline|ticket|support/.test(low)) { const ids = open.filter((r) => r._w === "hostline").map((r) => r.id); return filter(ids, "Hostline", `${ids.length} tâches liées à Hostline (tickets de support).`); }

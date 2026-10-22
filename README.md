@@ -10,7 +10,7 @@
 
 Une version 100 % statique de l'interface, avec des données fictives (agence événementielle « Nova Events »), tourne directement dans le navigateur, sans serveur :
 
-**`https://<votre-compte>.github.io/vigie-tour/`** (à remplacer par votre URL GitHub Pages, voir [Mode démo](#mode-démo--github-pages))
+**[https://atangui.github.io/vigi-tour/](https://atangui.github.io/vigi-tour/)**
 
 Vous pouvez cocher des tâches, les reporter, changer leur priorité, lire les fils de discussion, lancer « ✦ Rédiger avec Claude » (réponse préparée), poser une question à la barre de commande (par exemple « reporte ce qui vient de Léa à jeudi ») ou cliquer sur Synchroniser pour voir arriver de nouveaux mails.
 
