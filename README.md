@@ -4,6 +4,14 @@
 
 **English summary.** Vigie Tour is a local, privacy-first Windows tool that turns your e-mails into a task list (to do, waiting for, commitments, deadlines). Mails reach a synced folder through Power Automate flows, then go through a *zero-token cascade*: regex rules + a naive Bayes classifier that learns from your own decisions, then a local LLM (Ollama, `qwen3:8b`), and Claude (CLI) **only when you click** a ✦ button. Everything is stored in a local SQLite database and served by a dependency-free Python web server (stdlib only). Try the **[interactive demo](#démo-interactive)** (static page, fictitious data, no server needed).
 
+![Démo de Vigie Tour : ouverture d'une tâche, réponse rédigée par Claude, question en langage naturel, synchronisation](captures/demo.gif)
+
+| Thème Spatial (sombre) | Thème Bento (clair) |
+|---|---|
+| ![Vigie Tour, thème Spatial](captures/theme-spatial.png) | ![Vigie Tour, thème Bento](captures/theme-bento.png) |
+
+*Captures de la démo en ligne, données fictives.*
+
 ---
 
 ## Démo interactive
